@@ -6,11 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestRepresentant {
-	// Quelques constantes
 	private static final float FIXE_BASTIDE = 1000f;
 	private static final float INDEMNITE_OCCITANIE = 200f;
 	
-	private Representant r; // L'objet à tester
+	private Representant r; // L'objet que nous allons tester
 	private ZoneGeographique occitanie;
 	
 	@BeforeEach
@@ -80,8 +79,34 @@ public class TestRepresentant {
 		} catch (IllegalArgumentException e) {
 			// Si on arrive ici, c'est normal, c'est le comportement attendu
 		}
-
 	}
-	
-	
+        
+        
+        @Test
+	public void testMoisImpossible() {
+		
+		try {
+			// On enregistre un mois négatif, que doit-il se passer ?
+			// On s'attend à recevoir une exception
+			r.enregistrerCA(-1, 10000f);
+			// Si on arrive ici, c'est une erreur, le test doit échouer
+			fail("Un mois négatif doit générer une exception"); // Forcer l'échec du test			
+		} catch (IllegalArgumentException e) {
+			// Si on arrive ici, c'est normal, c'est le comportement attendu
+		}
+	}
+        
+        @Test
+	public void testPourcentageImpossible() {
+		
+		try {
+			// On enregistre un pourcentage négatif, que doit-il se passer ?
+			// On s'attend à recevoir une exception
+			r.salaireMensuel(0, -3f);
+			// Si on arrive ici, c'est une erreur, le test doit échouer
+			fail("Un pourcentage négatif doit générer une exception"); // Forcer l'échec du test			
+		} catch (IllegalArgumentException e) {
+			// Si on arrive ici, c'est normal, c'est le comportement attendu
+		}
+	}
 }
